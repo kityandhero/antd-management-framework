@@ -6,6 +6,9 @@
 /src/utils/request-temp.js
 _roadhog-api-doc
 
+# history
+/.history
+
 # production
 /dist
 
@@ -21,7 +24,6 @@ package-lock.json
 *bak
 
 # visual studio code
-.history
 *.log
 
 functions/mock
