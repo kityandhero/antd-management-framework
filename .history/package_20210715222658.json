@@ -1,0 +1,22 @@
+{
+  "name": "antd-management-framework",
+  "version": "1.0.0",
+  "description": "antd-management-framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "antd-management-framework"
+  ],
+  "author": "lzt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kityandhero/antd-management-framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kityandhero/antd-management-framework/issues"
+  },
+  "homepage": "https://github.com/kityandhero/antd-management-framework#readme"
+}

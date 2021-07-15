@@ -40,6 +40,7 @@
     "bizcharts": "^4.1.11",
     "classnames": "^2.3.1",
     "copy-to-clipboard": "^3.3.1",
+    "hash.js": "^1.1.7",
     "html-react-parser": "^1.2.7",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
@@ -83,6 +84,7 @@
     "husky": "^7.0.1",
     "jest-puppeteer": "^5.0.4",
     "lint-staged": "^11.0.1",
+    "mockjs": "^1.1.0",
     "prettier": "^2.3.2",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0"
