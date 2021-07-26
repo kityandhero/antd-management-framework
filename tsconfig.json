@@ -20,7 +20,8 @@
     "experimentalDecorators": true,
     "strict": true,
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./src/*"],
+      "@@/*": ["./src/.umi/*"]
     }
   },
   "include": [
@@ -37,5 +38,5 @@
     "jest.config.js",
     "mock/*"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "webpack", "jest"]
+  "exclude": ["node_modules", "build", "dist", "scripts","src/.umi/*",  "webpack", "jest"]
 }
