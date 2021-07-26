@@ -10,8 +10,7 @@ import {
   isUndefined,
   showRuntimeErrorMessage,
 } from '@/utils/tools';
-import { datetimeFormat } from '@/utils/constants';
-import { formNameCollection } from '@/customConfig/config';
+import { formNameCollection,datetimeFormat } from '@/utils/constants';
 
 import DataCore from '../../DataSingleView/DataCore';
 

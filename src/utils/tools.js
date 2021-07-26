@@ -1,4 +1,4 @@
-import { history, useIntl } from 'umi';
+import { history, useIntl, isBrowser } from 'umi';
 import { message, notification } from 'antd';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,14 +38,35 @@ import {
   emptyDatetime,
   notificationTypeCollection,
   messageTypeCollection,
-} from '@/utils/constants';
-import {
-  getNearestLocalhostNotifyCache,
-  setNearestLocalhostNotifyCache,
-} from '@/utils/globalStorageAssist';
-import { getConfigData } from '@/customConfig/config';
+} from './constants';
 
-import { logLevel, logShowMode, authenticationFailCode } from './constants';
+import { logLevel, logShowMode, authenticationFailCode, appInitCustom } from './constants';
+
+const storageKeyCollection = {
+  nearestLocalhostNotify: 'nearestLocalhostNotify',
+};
+
+function getConfigData() {
+  let corsTargetDomain = '';
+
+  if (appInitCustom != null) {
+    if (appInitCustom.apiPrefix != null) {
+      if (appInitCustom.apiPrefix.corsTargetDomain != null) {
+        const {
+          apiPrefix: { corsTargetDomain: corsTargetDomainRemote },
+        } = appInitCustom;
+
+        corsTargetDomain = corsTargetDomainRemote;
+      }
+    }
+  } else {
+    message.warn('未配置跨域域名');
+  }
+
+  return {
+    corsTargetDomain,
+  };
+}
 
 export function defaultBaseState() {
   return {
@@ -1748,6 +1769,39 @@ export function checkLocalhost() {
   return hostname === '127.0.0.1' || hostname === 'localhost';
 }
 
+export function getNearestLocalhostNotifyCache() {
+  const key = storageKeyCollection.nearestLocalhostNotify;
+
+  const d = getJsonFromLocalStorage(key);
+
+  if ((d || null) == null) {
+    return null;
+  }
+
+  if ((d.nearestTime || null) == null) {
+    return null;
+  }
+
+  return d || null;
+}
+
+export function setNearestLocalhostNotifyCache() {
+  const key = storageKeyCollection.nearestLocalhostNotify;
+
+  const now = parseInt(new Date().getTime() / 1000, 10);
+
+  const d = {
+    nearestTime: now,
+  };
+
+  return saveJsonToLocalStorage(key, d);
+}
+
+export function removeNearestLocalhostNotifyCache() {
+  const key = storageKeyCollection.nearestLocalhostNotify;
+  removeLocalStorage(key);
+}
+
 export function trySendNearestLocalhostNotify({ text }) {
   let needSend = false;
   let nearestTime = 0;
@@ -1884,16 +1938,30 @@ export function notify({
 }
 
 const requestAnimFrameCustom = (() => {
-  return (
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    ((a) => {
-      window.setTimeout(a, 1e3 / 60);
-    })
-  );
+  if (isBrowser()) {
+    return (
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      ((a) => {
+        window.setTimeout(a, 1e3 / 60);
+      })
+    );
+  }
+
+  return () => {};
 })();
 
 export const requestAnimFrame = requestAnimFrameCustom;
+
+// /**
+//  * 无用占位函数
+//  *
+//  * @export
+//  * @returns
+//  */
+// export default {
+//   getStringFromLocalStorage,
+// };

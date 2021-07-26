@@ -2,8 +2,9 @@ import React from 'react';
 import parse from 'html-react-parser';
 import { Drawer, Empty } from 'antd';
 
+import { imageContentPreviewMode } from '@/utils/constants';
 import CustomBase from '@/framework/CustomBase';
-import { imageContentPreviewMode } from '@/customConfig/config';
+
 
 import styles from './index.less';
 
